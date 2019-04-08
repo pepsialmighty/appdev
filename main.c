@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include "screen.h"
-#include<time.h>
+//#include<time.h>
 #include "sound.h"
 #include <signal.h>
 int main(){
@@ -23,7 +23,7 @@ int main(){
 		fread(&sd, sizeof(sd), 1 ,f);		//read WAV data
 		fclose(f);
 		displayWAVHDR(hdr);
-		//displayWAVDATA(sd);
+		displayWAVDATA(sd);
 	}
 	resetColors();
 }

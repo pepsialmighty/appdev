@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "sound.h"
 #include <math.h>
+#include "screen.h"
 
 void showID(char *idname,char *id){
 	int i;
@@ -13,6 +14,7 @@ void showID(char *idname,char *id){
 //value from 200 samples, decibevalue is callated by RMS formula
 void displayWAVDATA(short s[]){
 	double rms[80];
+	int dB[80];
 	short *ptr=s ;	//we use pointer to pointind to he beginning of the array
 	int i,j;		//for nested loop counters, outer loop repeat 80 times
 					//inner loop repeat 200 times
@@ -23,10 +25,18 @@ void displayWAVDATA(short s[]){
 			ptr++;
 		}
 		rms[i] = sqrt(sum/200);
+#ifdef DEBUG
 		printf("rms[%d] = %f\n",i , rms[i]);
+#endif
+		dB[i] = 20*log10(rms[i]);
 	}
+#ifndef DEBUG
+		barChart(dB);
+#endif
+
 }
 void displayWAVHDR(struct WAVHDR h){
+#ifdef DEBUG
 	showID("ChunkID",h.ChunkID);
 	printf("Chunk size: %d\n",h.ChunkSize);
 	showID("format",h.Format);
@@ -41,5 +51,21 @@ void displayWAVHDR(struct WAVHDR h){
 	showID("Subchunk2ID",h.Subchunk2ID);
 	printf("Subchunk2ID size : %d\n",h.Subchunk2Size);
 	//to be continue for other fields
+#else
+	setColors(WHITE,bg(RED));
+	printf("\033[1;1H");
+	printf("test.wav	");
+	setColors(YELLOW, bg(BLUE));
+	printf("\033[1;21H");
+	printf("Sample rate:%dHz	",h.SampleRate);
+	setColors(CYAN,bg(MAGENTA));
+	printf("\033[1;41H");
+	printf("Duration:%.2fsec	",(float)h.Subchunk2Size/h.ByteRate);
+	setColors(RED,bg(YELLOW));
 
+
+#endif
 }
+
+
+

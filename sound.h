@@ -1,4 +1,6 @@
 //const definitions
+//#define DEBUG  			//in developing mode,conditional compilation
+
 #define RATE 16000
 #define DUR  1
 #define RCMD "arecord -r16000 -c1 -f S16_LE -d1 -q test.wav"
@@ -19,9 +21,10 @@ struct WAVHDR{
 
 	char Subchunk2ID[4]; 		//must be "data"
 	int Subchunk2Size;		//calculated
+
 };
 
 // function declarations
 void displayWAVHDR(struct WAVHDR);
 void showID(char *,char *);
-void dilayWAVDATA(short []);
+void displayWAVDATA(short []);
