@@ -1,11 +1,33 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include "screen.h"
-//#include<time.h>
 #include "sound.h"
 #include <signal.h>
 #include"comm.h"
-int main(){
+int main(int argc, char **argv){
+	if(argc>1){			//if the user given some command line argument
+		printf("Test tone generation\n");
+		int fR, fL, ch;
+		float duration;
+		printf("No. of ch(1 or 2): ");
+		scanf("%d", &ch);
+		if(ch == 1){
+			printf("Mono Frequency: ");
+			scanf("%d ", &fL);
+		}
+		else if (ch == 2){
+			printf("Give me Left and Right fq: ");
+			scanf("%d %d", &fL, &fR);
+		}
+		else{
+			printf("Wrong number of channels\n");
+			return 1;
+		}
+		printf("Duration of sound: ");
+		scanf("%f", &dion);
+		testTone(ch, fL, fR, duration);
+		return 0;
+	}
 	FILE *f;
 	short sd[RATE];
 	for(;;){
