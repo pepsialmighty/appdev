@@ -9,6 +9,18 @@ void showID(char *idname,char *id){
 	for(i=0;i<4;i++) printf("%c",id[i]);
 	puts("");
 }
+//this function ionly called by displayWAVDATA(), so no need to put
+//a declation in sound.h. The function finds how many peaks from 80 pieces of 
+//decibel value
+int findPeaks(int d[]){
+		int c=0;
+		for(int i=1;i<80;i++){
+			if(d[i] >= 75 && d[i-1] <75) c++;
+		}
+		if(d[0] >= 75) c++;
+		return c;
+}
+
 //this funtion gets one second of samples (!&===) , and calculates 
 //80 pieces of decibels value, we know we need to calculate one decil
 //value from 200 samples, decibevalue is callated by RMS formula
@@ -30,11 +42,16 @@ void displayWAVDATA(short s[]){
 #endif
 		dB[i] = 20*log10(rms[i]);
 	}
-#ifndef DEBUG
+#ifndef DEBUG	
 		barChart(dB);
+		int peaks = findPeaks(dB);
+		setColors(WHITE, bg(BLACK));
+		printf("\033[1;61H");
+		printf("Peaks: %d	\n",peaks);
 #endif
 
 }
+
 void displayWAVHDR(struct WAVHDR h){
 #ifdef DEBUG
 	showID("ChunkID",h.ChunkID);
