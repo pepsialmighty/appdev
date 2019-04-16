@@ -9,7 +9,7 @@ int main(int argc, char **argv){
 		printf("Test tone generation\n");
 		int fR, fL, ch;
 		float duration;
-		printf("No. of ch(1 or 2): ");
+		printf("No. of channels (1 or 2): ");
 		scanf("%d", &ch);
 		if(ch == 1){
 			printf("Mono Frequency: ");
@@ -24,7 +24,7 @@ int main(int argc, char **argv){
 			return 1;
 		}
 		printf("Duration of sound: ");
-		scanf("%f", &dion);
+		scanf("%f", &duration);
 		testTone(ch, fL, fR, duration);
 		return 0;
 	}
