@@ -1,1 +1,102 @@
-# This is application development ver 1 
+# This is application development ver 1.1 ----BY NGUYEN NGUYEN
+
+This application offers a possibility to turn a raspberry Pi as a sound device. The applicplication   
+comes with 2 functions : a sound collector and a test tone generator
+
+List of content
+	1. Configuration Instructions
+	2. Installation Instructions
+	3. Operating Instructions
+	4. List of Files
+	5. Copyright/ Copyleft
+	6. Contact Info
+	7. Credits and Acknowlegdements
+	
+1. Configuration Instructions
+	
+	
+	Student need to prepare :
+	.A raspbry pi
+	.A microphone
+	.A 45 cable 
+	.A raspberry pi pow cable
+	.An USB sound card
+	.A SD card
+
+	To change the default audio device to USB soundcard, student need to follow these step:
+		- Plug in the USB sound card and microphone
+		- Use command "lsusb" to check is your USB mounted
+		- Use command "sudo nano /etc/asound.conf" and type these content to the file:
+			pcm.!fault{t {
+			type plug
+			slave{
+			pcm " hw:1,0"
+			}
+			}
+			ctl.!fafault {
+			type hw
+			card 1
+			}	
+
+		- Run "alsamixer", and you shoud see that USB sound card is the default audio device.
+	
+	This program also require libcurl library
+		To install libcurl:
+			- Use command "ls /usr/include/curl" to make sure that / usr/include/curl/ folder exists
+			- If the folder doesn't exist. Run "sudo apt-get update" to update the application list.
+			- Run "sudo apt-get install libcurl3" to install the libcurl3.
+			- Run "sudo apt-get install libcurl4-openssl-dev" to install the development API of 
+libcurl4.
+
+
+2. Installation Instructions
+	
+	.Install the latest NOOBS version for Raspberry Pi.
+	 You can get it at https://www.raspberrypi.org/downloads/noobs/
+	.Set the external USB sound card as default.
+	.Fix the bug of arecord by downgrade the alsa-utils from 1.0.28 to 1.0.25
+	.Install libcurl and its development API
+
+	You can get the source code from github by typing the following command:
+	git pull https://github.com/pepsialmighty/appdev
+	When you downloaded the the code, open the file comm.h to edit the url to your own receiving php file: #define SERVER_URL -_YOUR URL HERE_	
+	Then use the command " make" to compile the program
+	Run the program from the file wave.a as follow: ./wave.a YOUR_DEVICE_NAME
+		
+3. Operating Instructions
+	
+	. To build the project, use command "make".
+	. To compile the project, use command "./sound.out", you will see columns which display your sound
+	. In addition, you can accesing your recorded results through "testcurl.txt"
+	. To delete excution file, use command "make clean"
+	. Push all project to git hub by these step:
+		- Use git add _your projects_ to add the project that you wwant to submit.
+		- Use git commit -m "Name of the project", to name the project.
+		- use git push -u origin master to push the project to github
+
+4. List of file
+	
+	. README:	the instruction for reader.
+	. comm.c:	the communication part of the project
+	. comm.h:	the header file of comm.c
+	. main.c:	the main function
+	. makefile:	automate compilation to increase efficiency
+	. screen.c:	the displaying part of the project
+	. screen.h:	the header file of screen.c
+	. sound.c:	the sound analyzing part of the project
+	. sound.h:	the header file of the sound.c
+	. sound.php:	the data receing page
+	. testcurl.c:	the communication testing module
+
+5. Copyright/ copyleft
+
+	* This project was made by Nguyen Nguyen, e1800938
+
+6. Contact info
+	
+	* Email: e1800938@edu.vamk.fi
+
+7. Credit and acknowlegdements
+
+	* Author: Nguyen Nguyen
+	Special thanks to Instructor Gao Chao for instruct me to complete this project.
